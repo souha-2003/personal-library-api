@@ -48,4 +48,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * الكتب التي قام المستخدم بإضافتها إلى المكتبة
+     */
+    public function books()
+    {
+        return $this->hasMany(\Modules\Book\Models\Book::class);
+    }
+
+    /**
+     * التقييمات والملاحظات التي كتبها المستخدم
+     */
+    public function reviews()
+    {
+        return $this->hasMany(\Modules\Review\Models\Review::class);
+    }
 }

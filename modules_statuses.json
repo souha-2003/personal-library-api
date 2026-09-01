@@ -1,4 +1,5 @@
 {
     "Auth": true,
-    "Book": true
+    "Book": true,
+    "Review": true
 }

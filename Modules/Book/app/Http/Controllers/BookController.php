@@ -329,6 +329,13 @@ class BookController extends Controller
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        $dataToUpdate = [
+            'title' => $validated['title'],
+            'description' => $validated['description'] ?? null,
+            'category_id' => $validated['category_id'],
+            'author_id' => $validated['author_id'],
+        ];
+
         if ($request->hasFile('cover_image')) {
             // حذف الصورة القديمة إذا وجدت
             if ($book->cover_image) {
@@ -338,15 +345,10 @@ class BookController extends Controller
 
             $file = $request->file('cover_image');
             $path = $file->store('covers', 'public');
-            $book->cover_image = 'storage/' . $path;
+            $dataToUpdate['cover_image'] = 'storage/' . $path;
         }
 
-        $book->update([
-            'title' => $validated['title'],
-            'description' => $validated['description'] ?? null,
-            'category_id' => $validated['category_id'],
-            'author_id' => $validated['author_id'],
-        ]);
+        $book->update($dataToUpdate);
 
         return response()->json($book, 200);
     }
